@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>💌 Will You Be My Valentine?</title>
+  <meta name="theme-color" content="#0b0b10" />
+
+  <style>
+    :root{
+      --bg:#0b0b10;
+      --card:#12121a;
+      --text:#f4f4f8;
+      --muted:#b9b9c6;
+      --accent:#ff4d8d;
+      --accent2:#ffd1e3;
+      --radius:22px;
+      --shadow:0 20px 60px rgba(0,0,0,.45);
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+      background:
+        radial-gradient(800px 500px at 20% 10%, rgba(255,77,141,.18), transparent 60%),
+        radial-gradient(800px 500px at 90% 30%, rgba(255,209,227,.14), transparent 55%),
+        var(--bg);
+      color:var(--text);
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      overflow-x:hidden;
+    }
+
+    .wrap{ width:min(720px,100%); position:relative; }
+
+    .panel{
+      background: linear-gradient(180deg, rgba(255,255,255,.05), transparent 35%), var(--card);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+
+    .content{
+      padding:46px 28px;
+      text-align:center;
+      animation: fadeIn .6s ease;
+      position:relative;
+      z-index:1;
+    }
+
+    h1{
+      margin:0 0 12px;
+      font-size:clamp(30px,4.5vw,48px);
+      letter-spacing:-.02em;
+      background:linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    p{
+      margin:0;
+      color:var(--muted);
+      font-size:clamp(15px,2.2vw,18px);
+      line-height:1.6;
+    }
+
+    .divider{
+      width:140px;
+      height:1px;
+      background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);
+      margin:26px auto;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      border:none;
+      border-radius:999px;
+      padding:14px 28px;
+      font-weight:650;
+      font-size:16px;
+      cursor:pointer;
+      color:#0b0b10;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      box-shadow:0 12px 30px rgba(255,77,141,.2);
+      transition:transform .15s ease, filter .15s ease, box-shadow .15s ease;
+    }
+
+    .btn:hover{ 
+      transform:translateY(-2px) scale(1.02); 
+      filter:brightness(1.1); 
+      box-shadow:0 16px 40px rgba(255,77,141,.3);
+    }
+    .btn:active{ transform:translateY(0) scale(0.98); }
+
+    .hidden{ display:none; }
+
+    /* Letter page */
+    .letter{
+      padding:40px 26px;
+      text-align:left;
+      animation: fadeIn .6s ease;
+      position:relative;
+      z-index:1;
+    }
+
+    .letter h2{
+      margin:0 0 20px;
+      font-size:clamp(22px,3vw,30px);
+      text-align:center;
+      background:linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+
+    .paper{
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:18px;
+      padding:28px 24px;
+      line-height:1.75;
+      color:rgba(255,255,255,.9);
+      font-size:clamp(15px,2.2vw,18px);
+      margin-bottom:24px;
+    }
+
+    .question{
+      text-align:center;
+      margin:32px 0;
+      padding:24px;
+      background:linear-gradient(135deg, rgba(255,77,141,.1), rgba(255,209,227,.05));
+      border-radius:18px;
+      border:1px solid rgba(255,77,141,.2);
+    }
+
+    .question h3{
+      margin:0 0 20px;
+      font-size:clamp(24px,3.5vw,32px);
+      color:var(--text);
+      font-weight:600;
+    }
+
+    .btn-group{
+      display:flex;
+      gap:16px;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+
+    .btn-yes{
+      background:linear-gradient(135deg, #ff4d8d, #ff6ba3);
+      padding:16px 36px;
+      font-size:18px;
+      min-width:120px;
+    }
+
+    .btn-no{
+      background:rgba(255,255,255,.1);
+      color:var(--text);
+      border:1px solid rgba(255,255,255,.2);
+      padding:16px 36px;
+      font-size:18px;
+      min-width:120px;
+    }
+
+    .btn-no:hover{
+      background:rgba(255,255,255,.15);
+      box-shadow:0 12px 30px rgba(0,0,0,.2);
+    }
+
+    .response{
+      text-align:center;
+      padding:32px 24px;
+      animation: fadeIn .5s ease;
+    }
+
+    .response h3{
+      font-size:clamp(28px,4vw,36px);
+      margin:0 0 16px;
+      background:linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+
+    .response p{
+      font-size:clamp(16px,2.5vw,20px);
+      color:var(--text);
+      line-height:1.6;
+    }
+
+    .sig{
+      margin-top:18px;
+      font-weight:650;
+      color:rgba(255,255,255,.75);
+      text-align:right;
+    }
+
+    .back{
+      margin-top:22px;
+      background:transparent;
+      border:1px solid rgba(255,255,255,.16);
+      color:rgba(255,255,255,.9);
+      padding:10px 16px;
+      border-radius:999px;
+      cursor:pointer;
+      transition:all .2s ease;
+    }
+
+    .back:hover{
+      background:rgba(255,255,255,.05);
+      border-color:rgba(255,255,255,.25);
+    }
+
+    /* Floating hearts */
+    .heart{
+      position:absolute;
+      font-size:20px;
+      opacity:0;
+      pointer-events:none;
+      z-index:0;
+    }
+
+    @keyframes float{
+      0%{
+        transform:translateY(0) rotate(0deg);
+        opacity:0;
+      }
+      10%{
+        opacity:1;
+      }
+      100%{
+        transform:translateY(-100vh) rotate(360deg);
+        opacity:0;
+      }
+    }
+
+    @keyframes fadeIn{
+      from{opacity:0; transform:translateY(6px)}
+      to{opacity:1; transform:none}
+    }
+
+    @keyframes pulse{
+      0%, 100%{ transform:scale(1); }
+      50%{ transform:scale(1.05); }
+    }
+
+    @keyframes celebrate{
+      0%{ transform:scale(0) rotate(0deg); }
+      50%{ transform:scale(1.2) rotate(180deg); }
+      100%{ transform:scale(1) rotate(360deg); }
+    }
+
+    .celebrate{
+      animation:celebrate .6s ease;
+    }
+
+    /* Confetti effect */
+    .confetti{
+      position:fixed;
+      width:10px;
+      height:10px;
+      background:var(--accent);
+      position:absolute;
+      animation:confettiFall 3s linear forwards;
+      pointer-events:none;
+    }
+
+    @keyframes confettiFall{
+      0%{
+        transform:translateY(-100vh) rotate(0deg);
+        opacity:1;
+      }
+      100%{
+        transform:translateY(100vh) rotate(720deg);
+        opacity:0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="wrap">
+
+    <!-- PAGE 1 -->
+    <section class="panel" id="page1">
+      <div class="content">
+        <h1>💌 For You</h1>
+        <p id="warningText">This isn't meant to be opened in public.<br>
+           Take a quiet moment.</p>
+
+        <div class="divider"></div>
+
+        <button class="btn" id="openBtn">
+          Tap to open ❤️
+        </button>
+      </div>
+    </section>
+
+    <!-- PAGE 2 -->
+    <section class="panel hidden" id="page2">
+      <div class="letter">
+        <h2>Happy Valentine's Day ❤️</h2>
+
+        <div class="paper">
+          So... I know we're in different states,<br>
+          which means I can't just show up at your door<br>
+          with flowers and chocolates (legally, anyway).<br><br>
+
+          But distance hasn't stopped me from thinking about you,<br>
+          and it definitely won't stop me from asking this question.<br><br>
+
+          Plus, this digital card is way cooler than a paper one,<br>
+          right? Right? 😅<br><br>
+
+          So here's my question...
+
+          <div class="sig">— With love (from way over here)</div>
+        </div>
+
+        <div class="question">
+          <h3>Will you be my Valentine? 💕</h3>
+          <div class="btn-group">
+            <button class="btn btn-yes" id="yesBtn">Absolutely! 🎉❤️</button>
+            <button class="btn btn-no" id="noBtn">I need to check my calendar... 📅</button>
+          </div>
+          <p style="margin-top:24px; font-size:14px; color:var(--muted); text-align:center; font-style:italic;">
+            P.S. I'm not gonna know if you clicked yes or no,<br>
+            so I'll be waiting for a screenshot like a normal person 📸<br>
+            (No pressure, but I'll probably check my phone every 30 seconds 😅)
+          </p>
+        </div>
+
+        <button class="back" id="backBtn">← Back</button>
+      </div>
+    </section>
+
+    <!-- PAGE 3 - Response -->
+    <section class="panel hidden" id="page3">
+      <div class="response" id="responseContent">
+        <h3 id="responseTitle"></h3>
+        <p id="responseText"></p>
+        <button class="back" id="backToLetterBtn" style="margin-top:24px;">← Back</button>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    const page1 = document.getElementById("page1");
+    const page2 = document.getElementById("page2");
+    const page3 = document.getElementById("page3");
+    const openBtn = document.getElementById("openBtn");
+    const backBtn = document.getElementById("backBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const backToLetterBtn = document.getElementById("backToLetterBtn");
+    const responseTitle = document.getElementById("responseTitle");
+    const responseText = document.getElementById("responseText");
+    const warningText = document.getElementById("warningText");
+    
+    let clickCount = 0;
+
+    // Create floating hearts
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.textContent = '❤️';
+      heart.style.left = Math.random() * 100 + '%';
+      heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+      heart.style.animation = 'float ' + heart.style.animationDuration + ' linear forwards';
+      document.body.appendChild(heart);
+      
+      setTimeout(() => heart.remove(), 5000);
+    }
+
+    // Create confetti
+    function createConfetti() {
+      const colors = ['#ff4d8d', '#ffd1e3', '#ff6ba3', '#ff9ec4'];
+      for(let i = 0; i < 50; i++) {
+        setTimeout(() => {
+          const confetti = document.createElement('div');
+          confetti.className = 'confetti';
+          confetti.style.left = Math.random() * 100 + '%';
+          confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+          confetti.style.animationDelay = Math.random() * 0.5 + 's';
+          document.body.appendChild(confetti);
+          
+          setTimeout(() => confetti.remove(), 3000);
+        }, i * 30);
+      }
+    }
+
+    openBtn.addEventListener("click", () => {
+      clickCount++;
+      
+      if (clickCount === 1) {
+        warningText.innerHTML = "Wait... are you <em>sure</em> you want to open this?<br>There's no going back once you do. 😏";
+        openBtn.innerHTML = "Yes, I'm sure! ❤️";
+      } else if (clickCount === 2) {
+        warningText.innerHTML = "Okay, but are you <em>really</em> sure?<br>Like, 100% certain? No take-backsies? 🤔";
+        openBtn.innerHTML = "Yes, really really sure! 💕";
+      } else if (clickCount === 3) {
+        warningText.innerHTML = "Last chance! Are you absolutely, positively,<br>cross-your-heart-and-hope-to-die sure? 🎯";
+        openBtn.innerHTML = "YES! Open it already! 🚀";
+      } else {
+        // Finally open the card
+        page1.classList.add("hidden");
+        page2.classList.remove("hidden");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        
+        // Start floating hearts
+        setInterval(createHeart, 800);
+      }
+    });
+
+    backBtn.addEventListener("click", () => {
+      page2.classList.add("hidden");
+      page1.classList.remove("hidden");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      
+      // Reset confirmation steps
+      clickCount = 0;
+      warningText.innerHTML = "This isn't meant to be opened in public.<br>Take a quiet moment.";
+      openBtn.innerHTML = "Tap to open ❤️";
+    });
+
+    yesBtn.addEventListener("click", () => {
+      responseTitle.textContent = "YES! 🎉💕";
+      responseText.textContent = "Okay, I'm literally doing a victory dance right now (you can't see it, but trust me, it's happening). Even though we're states apart, we're officially Valentines! The distance is just... extra steps. Worth it! ❤️";
+      page2.classList.add("hidden");
+      page3.classList.remove("hidden");
+      page3.classList.add("celebrate");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      
+      // Celebrate with confetti
+      createConfetti();
+      
+      // More hearts
+      for(let i = 0; i < 20; i++) {
+        setTimeout(createHeart, i * 100);
+      }
+    });
+
+    noBtn.addEventListener("click", () => {
+      responseTitle.textContent = "Fair enough 😅";
+      responseText.textContent = "Okay, I see you need to check your calendar... I'll be here waiting (probably refreshing this page every 5 minutes like a normal, totally chill person). Just so you know, I've already cleared my entire February 14th schedule. No pressure though! 💙";
+      page2.classList.add("hidden");
+      page3.classList.remove("hidden");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    backToLetterBtn.addEventListener("click", () => {
+      page3.classList.add("hidden");
+      page2.classList.remove("hidden");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    // Start with a few hearts on page load
+    for(let i = 0; i < 3; i++) {
+      setTimeout(createHeart, i * 500);
+    }
+  </script>
+</body>
+</html>
